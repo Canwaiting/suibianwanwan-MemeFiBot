@@ -1,3 +1,4 @@
+import random
 import asyncio
 from time import time
 from random import randint
@@ -492,6 +493,10 @@ class Tapper:
 
                     spins = profile_data.get('spinEnergyTotal', 0)
                     while spins > 0:
+                        if random.random() < 0.7:
+                            logger.info(f"{self.session_name} | 跳过玩转盘游戏")
+                            continue
+
                         await asyncio.sleep(delay=1)
 
                         spin_multiplier = calculate_spin_multiplier(spins=spins)
@@ -575,6 +580,10 @@ class Tapper:
                         continue
 
                     if active_turbo is False:
+                        if random.random() < 0.7:
+                            logger.info(f"{self.session_name} | 跳过应用 Boost Energy")
+                            continue
+
                         if (energy_boost_count > 0
                                 and available_energy < settings.MIN_AVAILABLE_ENERGY
                                 and settings.APPLY_DAILY_ENERGY is True):
@@ -636,6 +645,10 @@ class Tapper:
                                     await self.purchase_and_start_tapbot(http_client, bot_config)
 
                         if settings.AUTO_UPGRADE_TAP is True and next_tap_level <= settings.MAX_TAP_LEVEL:
+                            if random.random() < 0.7:
+                                logger.info(f"{self.session_name} | 跳过升级Tap")
+                                continue
+
                             need_balance = 1000 * (2 ** (next_tap_level - 1))
 
                             if balance > need_balance:
@@ -652,6 +665,10 @@ class Tapper:
                                                f"(<lc>{balance}</lc><lw>/</lw><le>{need_balance}</le>)")
 
                         if settings.AUTO_UPGRADE_ENERGY is True and next_energy_level <= settings.MAX_ENERGY_LEVEL:
+                            if random.random() < 0.7:
+                                logger.info(f"{self.session_name} | 跳过升级能量")
+                                continue
+
                             need_balance = 1000 * (2 ** (next_energy_level - 1))
                             if balance > need_balance:
                                 status = await self.upgrade_boost(http_client=http_client,
@@ -668,6 +685,9 @@ class Tapper:
 
                         if settings.AUTO_UPGRADE_CHARGE is True and next_charge_level <= settings.MAX_CHARGE_LEVEL:
                             need_balance = 1000 * (2 ** (next_charge_level - 1))
+                            if random.random() < 0.7:
+                                logger.info(f"{self.session_name} | 跳过升级Boost")
+                                continue
 
                             if balance > need_balance:
                                 status = await self.upgrade_boost(http_client=http_client,
