@@ -388,6 +388,7 @@ class Tapper:
                 response_json = await response.json()
 
                 if 'errors' in response_json:
+                    await asyncio.sleep(randint(5, 300))
                     raise InvalidProtocol(f'send_taps msg: {response_json["errors"][0]["message"]}')
 
                 profile_data = response_json.get('data', {}).get('telegramGameProcessTapsBatch', {})
@@ -731,8 +732,8 @@ class Tapper:
                 else:
                     sleep_between_clicks = randint(a=settings.SLEEP_BETWEEN_TAP[0], b=settings.SLEEP_BETWEEN_TAP[1])
 
-                    if active_turbo is True:
-                        sleep_between_clicks = randint(5, 20)
+                    # if active_turbo is True:
+                    #     sleep_between_clicks = randint(5, 20)
 
                     logger.info(f"Sleep {sleep_between_clicks}s")
                     await asyncio.sleep(delay=sleep_between_clicks)
