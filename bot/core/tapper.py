@@ -493,7 +493,7 @@ class Tapper:
 
                     spins = profile_data.get('spinEnergyTotal', 0)
                     while spins > 0:
-                        if random.random() < 0.7:
+                        if random.random() < 0.5:
                             logger.info(f"{self.session_name} | 跳过玩转盘游戏")
                             continue
 
@@ -580,7 +580,7 @@ class Tapper:
                         continue
 
                     if active_turbo is False:
-                        if random.random() < 0.7:
+                        if random.random() < 0.5:
                             logger.info(f"{self.session_name} | 跳过应用 Boost Energy")
                             continue
 
@@ -645,7 +645,7 @@ class Tapper:
                                     await self.purchase_and_start_tapbot(http_client, bot_config)
 
                         if settings.AUTO_UPGRADE_TAP is True and next_tap_level <= settings.MAX_TAP_LEVEL:
-                            if random.random() < 0.7:
+                            if random.random() < 0.5:
                                 logger.info(f"{self.session_name} | 跳过升级Tap")
                                 continue
 
@@ -665,7 +665,7 @@ class Tapper:
                                                f"(<lc>{balance}</lc><lw>/</lw><le>{need_balance}</le>)")
 
                         if settings.AUTO_UPGRADE_ENERGY is True and next_energy_level <= settings.MAX_ENERGY_LEVEL:
-                            if random.random() < 0.7:
+                            if random.random() < 0.5:
                                 logger.info(f"{self.session_name} | 跳过升级能量")
                                 continue
 
@@ -685,7 +685,7 @@ class Tapper:
 
                         if settings.AUTO_UPGRADE_CHARGE is True and next_charge_level <= settings.MAX_CHARGE_LEVEL:
                             need_balance = 1000 * (2 ** (next_charge_level - 1))
-                            if random.random() < 0.7:
+                            if random.random() < 0.5:
                                 logger.info(f"{self.session_name} | 跳过升级Boost")
                                 continue
 
@@ -732,7 +732,7 @@ class Tapper:
                     sleep_between_clicks = randint(a=settings.SLEEP_BETWEEN_TAP[0], b=settings.SLEEP_BETWEEN_TAP[1])
 
                     if active_turbo is True:
-                        sleep_between_clicks = 4
+                        sleep_between_clicks = randint(5, 20)
 
                     logger.info(f"Sleep {sleep_between_clicks}s")
                     await asyncio.sleep(delay=sleep_between_clicks)
